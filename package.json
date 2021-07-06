@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "pug-loader": "^2.4.0"
+  }
+}
