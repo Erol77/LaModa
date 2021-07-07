@@ -78,13 +78,15 @@ cartOverlay.addEventListener('click',event => {
 try {
     
     const goodsTitle = document.querySelector('.goods__title'); 
-    const navigationLink = document.querySelector(".navigation__link").innerHTML;
+    const navigationLink = document.querySelectorAll(".navigation__link");
     const navigationLink2 = document.querySelector('.navigation__list').getElementsByTagName('a');
-    console.log(navigationLink2); 
-    for (let i = 0; i < navigationLink2.length ; i++){
-        const cheingTitle = [navigationLink2[i].hash,navigationLink2[i].innerHTML];
-        console.log(cheingTitle);
-    }
+    console.log(navigationLink); 
+   const abeytTitle =() =>{ for (let i = 0; i < navigationLink2.length ; i++){
+    //    const cheingTitle = [navigationLink2[i].hash,navigationLink2[i].innerHTML];
+      //  console.log(cheingTitle);
+        if (navigationLink2[i].hash.substring(1) === hash){goodsTitle.textContent = navigationLink2[i].innerHTML;}
+    }};
+    abeytTitle();
    
 
         const goodsList = document.querySelector('.goods__list');
@@ -134,7 +136,7 @@ try {
         window.addEventListener('hashchange', () => {
             hash = location.hash.substring(1);
             getGoods(renderGoodsList, hash);
-            goodsTitle.textContent = hash;
+            abeytTitle();
         });
         getGoods(renderGoodsList, hash);
     
