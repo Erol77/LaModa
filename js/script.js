@@ -55,7 +55,7 @@ const getGoods = (callback, value) => {
     getData()
         .then(data => {
             if (value) {
-                callback(data.filter(item => item.category === value))
+                callback(data.filter(item => item.category === value));
             } else {
             callback(data);}
         })
@@ -76,13 +76,21 @@ cartOverlay.addEventListener('click',event => {
 } );
 
 try {
-    console.log(hash);
+    
+    const goodsTitle = document.querySelector('.goods__title'); 
+    const navigationLink = document.querySelector(".navigation__link").innerHTML;
+    const navigationLink2 = document.querySelector('.navigation__list').getElementsByTagName('a');
+    console.log(navigationLink2); 
+    for (let i = 0; i < navigationLink2.length ; i++){
+        const cheingTitle = [navigationLink2[i].hash,navigationLink2[i].innerHTML];
+        console.log(cheingTitle);
+    }
+   
+
         const goodsList = document.querySelector('.goods__list');
             if (!goodsList ) {
-                throw 'this is not a goods page!' 
+                throw 'this is not a goods page!' ;
         }
-
-
         const createCard = ({ id, preview, cost, brand, name, sizes }) => {
             const li = document.createElement('li');
             li.classList.add('goods__item');
@@ -126,6 +134,7 @@ try {
         window.addEventListener('hashchange', () => {
             hash = location.hash.substring(1);
             getGoods(renderGoodsList, hash);
+            goodsTitle.textContent = hash;
         });
         getGoods(renderGoodsList, hash);
     
