@@ -49,3 +49,20 @@ cartOverlay.addEventListener('click',event => {
     }
 
 } );
+//запрос данных из бд
+const getData = async () => {
+    const data = await fetch('db.json');
+    if (data.ok){
+        return data.json()
+    } else {
+        throw new Error(`Данные небыли получены, ошибка ${data.status} ${data.statysText}`)
+    }
+};/* метод асиннхронного позволяет с помощью await загрузить после загрузки данных
+console.log(getData());
+const getData2 =  async () => {
+    const data = await fetch('db.json');
+        console.log(data);
+};*/
+getData().then(data => {
+    console.log(data);
+})
