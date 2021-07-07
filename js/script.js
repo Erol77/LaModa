@@ -1,6 +1,7 @@
 'use strict';
 const headerCityButton = document.querySelector('.header__city-button');
 //if (localStorage.getItem('lomoda-location')){}
+let hash = location.hash.substring(1);
 headerCityButton.textContent = localStorage.getItem('lomoda-location') || 'Ваш город?';
 headerCityButton.addEventListener('click', () => {
     const city = prompt('Укажите ваш город!');
@@ -53,7 +54,7 @@ const getData = async () => {
 const getGoods = (callback) => {
     getData()
         .then(data => {
-            console.log(data);
+            callback(data);
         })
         .catch( err => {
             console.error(err);
@@ -72,9 +73,13 @@ cartOverlay.addEventListener('click',event => {
 } );
 
 try {
+    console.log(hash);
         const goodsList = document.querySelector('.goods__list');
-            if (!goodsList ) {throw 'this is not a goods page!'; 
+            if (!goodsList ) {
+                throw 'this is not a goods page!' 
         }
+
+
         const createCard = ({ id, preview, cost, brand, name, sizes  }) => {
             const li = document.createElement('li');
             li.classList.add('goods__item');
@@ -82,7 +87,7 @@ try {
             li.innerHTML = `
             <article class="good">
                 <a class="good__link-img" href="card-good.html#${id}">
-                    <img class="good__img" src="goods-image/${preview}" alt="">
+                    <img class="good__img" src="goods-image/ ${preview}" alt="">
                 </a>
                 <div class="good__description">
                     <p class="good__price">${cost} &#8381;</p>
@@ -94,12 +99,13 @@ try {
                 </div>
             </article>
             `;
+            //const li: HTMLElement
 
             return li;
         };
         const renderGoodsList = data => {
             goodsList.textContent = '';
-         /*   console.log('figa',data);
+            console.log('figa',data);
             for (let i = 0; i < data.length ; i++){
                 console.log(data[i]);
                 console.log('----');
@@ -107,12 +113,12 @@ try {
             for (const item of data){
                 console.log('for/of',item);
             }
-         */   data.forEach((item,i,arr) => {
+            data.forEach((item) => {
                 const card = createCard(item);
                 goodsList.append(card);
             });
         };
-        getGoods(renderGoodsList);
+        getGoods(renderGoodsList, hash);
     
 }catch (err) {
         console.warn(err);
