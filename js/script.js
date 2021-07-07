@@ -51,10 +51,13 @@ const getData = async () => {
         throw new Error(`Данные небыли получены, ошибка ${data.status} ${data.statysText}`);
     }
 };
-const getGoods = (callback) => {
+const getGoods = (callback, value) => {
     getData()
         .then(data => {
-            callback(data);
+            if (value) {
+                callback(data.filter(item => item.category === value))
+            } else {
+            callback(data);}
         })
         .catch( err => {
             console.error(err);
@@ -80,14 +83,14 @@ try {
         }
 
 
-        const createCard = ({ id, preview, cost, brand, name, sizes  }) => {
+        const createCard = ({ id, preview, cost, brand, name, sizes }) => {
             const li = document.createElement('li');
             li.classList.add('goods__item');
 
             li.innerHTML = `
             <article class="good">
                 <a class="good__link-img" href="card-good.html#${id}">
-                    <img class="good__img" src="goods-image/ ${preview}" alt="">
+                    <img class="good__img" src="goods-image/${preview}" alt="">
                 </a>
                 <div class="good__description">
                     <p class="good__price">${cost} &#8381;</p>
@@ -105,7 +108,7 @@ try {
         };
         const renderGoodsList = data => {
             goodsList.textContent = '';
-            console.log('figa',data);
+          /*  console.log('figa',data);
             for (let i = 0; i < data.length ; i++){
                 console.log(data[i]);
                 console.log('----');
@@ -113,11 +116,17 @@ try {
             for (const item of data){
                 console.log('for/of',item);
             }
-            data.forEach((item) => {
+           */ 
+          //console.log('figa',data)
+                data.forEach((item) => {
                 const card = createCard(item);
                 goodsList.append(card);
             });
         };
+        window.addEventListener('hashchange', () => {
+            hash = location.hash.substring(1);
+            getGoods(renderGoodsList, hash);
+        });
         getGoods(renderGoodsList, hash);
     
 }catch (err) {
