@@ -148,14 +148,15 @@ try {
 
 //
 try {
-    
+
 }catch (err) {
     console.warn(err);
 }
 
 //
 try {
-    if (!document.querySelector('.card-good')){
+    if (!document.querySelector('.card-good')){ 
+        //зддесь мы проевряем на нужной ли мы странице, если да то все ок иначе выводится сообщение в консоли что это не та страница
         throw 'This is not card-cood page!';
     }
     const cardGoodImage = document.querySelector('.card-good__image');
@@ -174,6 +175,7 @@ try {
     '');
 
     const renderCardGood = ([{id, cost, brand, name, sizes, photo, color}]) => {
+        //здесь мы деструктурировали объект, т.е. поставив кв скобки с наружи мы разложили обыект на элементы
         cardGoodImage.src = `goods-image/${photo}` ;
         cardGoodBrand.textContent = `${brand} ${name}` ;
         cardGoodTitle.textContent =  name;
